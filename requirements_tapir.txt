@@ -1,0 +1,11 @@
+chex == 0.1.8
+jax
+jaxline
+optax
+dm-haiku
+dm-tree
+typing_extensions
+matplotlib
+mediapy
+opencv-python
+einshape
