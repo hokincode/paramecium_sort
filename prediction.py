@@ -119,6 +119,7 @@ def sample_random_points(frame_max_idx, height, width, num_points):
 
 def main(video_path, output_video_path, track_data_path, centroid_data_path, shape_data_path):
     #track_data = pd.DataFrame(columns=['Time', 'ID', 'X', 'Y'])
+
     track_data = pd.DataFrame(columns=['frame', 'ID', 'xmin', 'ymin', 'xmax', 'ymax'])
     track_data.to_csv(track_data_path, index=False)
 
@@ -419,6 +420,8 @@ def main(video_path, output_video_path, track_data_path, centroid_data_path, sha
 
 if __name__ == "__main__":
     if len(sys.argv) != 6:
+        print(sys.argv)
+        print(len(sys.argv))
         print("Usage: python prediction.py './video/example.avi' 'out_example.mp4' 'example.csv'")
     else:
         video_path = sys.argv[1]
