@@ -68,7 +68,7 @@ The prediction script takes three inputs:
 
 This github repo comes loaded with a small example movie so can be tested with:
 ```sh
-python prediction.py './video/example.avi' 'out_example.mp4' 'example.csv'
+python prediction.py './video/example.avi' 'out_example.mp4' 'track_example.csv' 'centroid_example.csv' 'shape_data.csv'
 ```
 
 python -m pip install torch torchvision torchaudio
