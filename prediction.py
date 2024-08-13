@@ -1,3 +1,5 @@
+import os
+
 import cv2
 import copy
 import numpy as np
@@ -13,9 +15,9 @@ import jax
 import mediapy as media
 import tree
 
-from tapnet import tapir_model
-from tapnet.utils import transforms
-from tapnet.utils import viz_utils
+# from tapnet.tapnet import tapir_model
+# from tapnet.utils import transforms
+# from tapnet.utils import viz_utils
 
 from glob import glob
 from tifffile import imread
@@ -36,7 +38,9 @@ def frame_to_time(frame_number, frames_per_second=30):
     minutes, seconds = divmod(frame_number, frames_per_second)
     return f"{minutes:02d}:{seconds:02d}"
 
-checkpoint_path = 'tapnet/checkpoints/causal_tapir_checkpoint.npy' #tapir_checkpoint.npy
+checkpoint_path = 'tapnet/tapnet/checkpoints/causal_tapir_checkpoint.npy' #tapir_checkpoint.npy
+current_dir = os.getcwd()
+print(current_dir)
 ckpt_state = np.load(checkpoint_path, allow_pickle=True).item()
 params, state = ckpt_state['params'], ckpt_state['state']
 
