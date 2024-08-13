@@ -107,8 +107,6 @@ def inference(frames, query_points):
     visibles = postprocess_occlusions(occlusions, expected_dist)
     return tracks, visibles
 
-
-
 def sample_random_points(frame_max_idx, height, width, num_points):
   """Sample random points with (time, height, width) order."""
   y = np.random.randint(0, height, (num_points, 1))
@@ -420,9 +418,12 @@ def main(video_path, output_video_path, track_data_path, centroid_data_path, sha
 
 if __name__ == "__main__":
     if len(sys.argv) != 6:
+        print("Wrong Usage: System parameters must equal to 6")
         print(sys.argv)
         print(len(sys.argv))
-        print("Usage: python prediction.py './video/example.avi' 'out_example.mp4' 'example.csv'")
+        print(sys.argv[1])
+        print(sys.argv[2])
+        print(sys.argv[3])
     else:
         video_path = sys.argv[1]
         output_video_path = sys.argv[2]
