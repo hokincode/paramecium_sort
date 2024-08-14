@@ -42,7 +42,7 @@ def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--experiment', type=str, default='1000mV_Sample02',help='directory of to be split files', dest='experiment')
     parser.add_argument('--input-dir', type=str, default='../processed/',help='directory of to be split files', dest='input_dir')
-    parser.add_argument('--split-dir', type=str, default='../cell_sort/split_frame/',help='directory to split files', dest='split_dir')
+    parser.add_argument('--split-dir', type=str, default='../cell/split_frame/',help='directory to split files', dest='split_dir')
     return parser.parse_args()
 
 def split_frame(df):

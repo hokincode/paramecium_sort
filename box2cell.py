@@ -11,7 +11,7 @@ import time
 import os
 import re
 import pandas as pd
-from cell import Cell
+from cell import cell as Cell
 
 def logger_setup():
     """ logger_setup
@@ -41,9 +41,7 @@ def logger_setup():
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--experiment', type=str, default='1000mV_Sample00',help='directory of to be split files', dest='experiment')
-    parser.add_argument('--input-dir', type=str, default='../processed/',help='directory of to be split files', dest='input_dir')
-    parser.add_argument('--sort-dir', type=str, default='../cell_sort/sort/',help='directory to split files', dest='sort_dir')
+    parser.add_argument('--sort', type=str, default='track_example', help='directory of to be sorted', dest='sort')
     return parser.parse_args()
 
 def sort(df, path):
@@ -61,10 +59,8 @@ def sort(df, path):
             'ymin': row['ymin'],
             'xmax': row['xmax'],
             'ymax': row['ymax'],
-            'remove': row['remove'],
-            'x': row['x'],
-            'y': row['y'],
-            'velocity': row['velocity']
+            'x': row['xmin'],
+            'y': row['ymin'],
         }
         cell = Cell(box_info)
         list_of_cells.append(cell)
@@ -87,10 +83,11 @@ def sort(df, path):
 if __name__ == "__main__":
     args = get_args()
     print(os.getcwd())
-    out_path = args.sort_dir
-    input_path = args.input_dir
-    experiment_behavior_csv = args.input_dir + args.experiment + '_behavior.csv'
+    out_path = args.sort
+    input_path = args.sort
+    experiment_behavior_csv = args.sort + '.csv'
+    print(experiment_behavior_csv)
     df = pd.read_csv(experiment_behavior_csv)
-    out_path = out_path + args.experiment + '/'
+    out_path = out_path + args.sort + '/'
     os.makedirs(out_path, exist_ok=True)
     sort(df, out_path)
