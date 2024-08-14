@@ -3,7 +3,6 @@ import sys
 import numpy as np
 import matplotlib
 matplotlib.rcParams["image.interpolation"] = 'none'
-import matplotlib.pyplot as plt
 
 from glob import glob
 from tqdm import tqdm
