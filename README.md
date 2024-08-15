@@ -12,7 +12,7 @@ Sort boxes in the frames into individual cells (save in the "sorted_cell" folder
 python box2cell.py --sort centroid_example.csv --sorted sorted_cell
 ```
 
-Analysis
+Analysis of individual cell data using Jupyter Notebook
 
 ```sh
 jupyter notebook analysis.ipynb
