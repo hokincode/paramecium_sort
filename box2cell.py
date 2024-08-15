@@ -56,12 +56,8 @@ def sort(df, path):
         box_info = {
             'frame': row['frame'],
             'ID': row['ID'],
-            'xmin': row['xmin'],
-            'ymin': row['ymin'],
-            'xmax': row['xmax'],
-            'ymax': row['ymax'],
-            'x': row['xmin'],
-            'y': row['ymin'],
+            'x': row['x'],
+            'y': row['y'],
         }
         print(type(Cell_Object))
         cell = Cell_Object(box_info)
@@ -88,7 +84,6 @@ if __name__ == "__main__":
     out_path = args.sorted
     input_path = args.sort
     experiment_behavior_csv = args.sort
-    print(experiment_behavior_csv)
     df = pd.read_csv(experiment_behavior_csv)
     out_path = out_path + args.sort + '/'
     os.makedirs(out_path, exist_ok=True)
