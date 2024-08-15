@@ -87,7 +87,7 @@ if __name__ == "__main__":
     print(os.getcwd())
     out_path = args.sorted
     input_path = args.sort
-    experiment_behavior_csv = args.sort + '.csv'
+    experiment_behavior_csv = args.sort
     print(experiment_behavior_csv)
     df = pd.read_csv(experiment_behavior_csv)
     out_path = out_path + args.sort + '/'
