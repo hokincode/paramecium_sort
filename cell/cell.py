@@ -1,5 +1,6 @@
 import math
 import json
+import numpy as np
 
 class Frame:
     def __init__(self, frame, ID, x, y):
