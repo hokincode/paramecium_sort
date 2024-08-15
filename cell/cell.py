@@ -13,11 +13,16 @@ class Frame:
                 f"y={self.y}")
 
     def to_dict(self):
+        def convert(value):
+            if isinstance(value, (np.integer, np.floating)):
+                return value.item()  # Convert numpy data types to native Python types
+            return value
+
         return {
-            'frame': self.frame,
-            'ID': self.ID,
-            'x': self.x,
-            'y': self.y,
+            'frame': convert(self.frame),
+            'ID': convert(self.ID),
+            'x': convert(self.x),
+            'y': convert(self.y),
         }
 
 class Cell:
