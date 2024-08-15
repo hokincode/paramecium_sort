@@ -11,3 +11,5 @@ Sort boxes in the frames into individual cells (save in the "sorted_cell" folder
 ```sh
 python box2cell.py --sort centroid_example.csv --sorted sorted_cell
 ```
+
+Analysis
