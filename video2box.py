@@ -89,7 +89,7 @@ def sample_random_points(frame_max_idx, height, width, num_points):
   points = np.concatenate((t, y, x), axis=-1).astype(np.int32)  # [num_points, 3]
   return points
 
-def main(video_path, output_video_path, track_data_path, centroid_data_path, shape_data_path):
+def main(video_path, output_video_path, track_data_path, centroid_data_path, shape_data_path, total_data_path):
     #track_data = pd.DataFrame(columns=['Time', 'ID', 'X', 'Y'])
 
     track_data = pd.DataFrame(columns=['frame', 'ID', 'xmin', 'ymin', 'xmax', 'ymax'])
@@ -183,9 +183,9 @@ def main(video_path, output_video_path, track_data_path, centroid_data_path, sha
                             track_colors[clr], 1)      
 
     output_video.write(prev_frame)
-    # tracking_data = []
 
     frame_count = 1
+
     # Infinite loop to process video frames
     while True:
         # Capture frame-by-frame
@@ -264,8 +264,13 @@ def main(video_path, output_video_path, track_data_path, centroid_data_path, sha
     centroid_data.to_csv(centroid_data_path, mode='a', index=False, header=False)
     shape_data.to_csv(shape_data_path, mode='a', index=False, header=False)
 
+    # Concatenate the DataFrames vertically
+    combined_data = pd.concat([track_data, centroid_data, shape_data])
+    # Save the combined DataFrame to a single CSV file
+    combined_data.to_csv(total_data_path, index=False)
+
 if __name__ == "__main__":
-    if len(sys.argv) != 6:
+    if len(sys.argv) != 7:
         print("Wrong Usage: System parameters must equal to 6")
         print(sys.argv)
         print(len(sys.argv))
@@ -278,4 +283,5 @@ if __name__ == "__main__":
         track_data_path = sys.argv[3]
         centroid_data_path = sys.argv[4]
         shape_data_path = sys.argv[5]
-        main(video_path, output_video_path, track_data_path, centroid_data_path, shape_data_path)
+        total_data_path = sys.argv[6]
+        main(video_path, output_video_path, track_data_path, centroid_data_path, shape_data_path, total_data_path)
