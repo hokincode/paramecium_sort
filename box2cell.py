@@ -47,7 +47,6 @@ def get_args():
 
 def sort(df, path):
     # Group by the 'frame' column
-
     grouped = df.groupby('frame')
     group_2 = grouped.get_group(2)
     list_of_cells = []
@@ -80,10 +79,9 @@ def sort(df, path):
 if __name__ == "__main__":
     args = get_args()
     print(os.getcwd())
-    out_path = args.sorted
     input_path = args.sort
     experiment_behavior_csv = args.sort
     df = pd.read_csv(experiment_behavior_csv)
-    out_path = out_path + args.sort + '/'
+    out_path = args.sorted + '/'
     os.makedirs(out_path, exist_ok=True)
     sort(df, out_path)
