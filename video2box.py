@@ -89,7 +89,7 @@ def sample_random_points(frame_max_idx, height, width, num_points):
   points = np.concatenate((t, y, x), axis=-1).astype(np.int32)  # [num_points, 3]
   return points
 
-def main(video_path, output_video_path, track_data_path, centroid_data_path, shape_data_path, total_data_path):
+def main(video_path, output_video_path, track_data_path, centroid_data_path, shape_data_path):
     #track_data = pd.DataFrame(columns=['Time', 'ID', 'X', 'Y'])
 
     track_data = pd.DataFrame(columns=['frame', 'ID', 'xmin', 'ymin', 'xmax', 'ymax'])
@@ -265,7 +265,7 @@ def main(video_path, output_video_path, track_data_path, centroid_data_path, sha
     shape_data.to_csv(shape_data_path, mode='a', index=False, header=False)
 
 if __name__ == "__main__":
-    if len(sys.argv) != 7:
+    if len(sys.argv) != 6:
         print("Wrong Usage: System parameters must equal to 6")
         print(sys.argv)
         print(len(sys.argv))
@@ -279,4 +279,4 @@ if __name__ == "__main__":
         centroid_data_path = sys.argv[4]
         shape_data_path = sys.argv[5]
         total_data_path = sys.argv[6]
-        main(video_path, output_video_path, track_data_path, centroid_data_path, shape_data_path, total_data_path)
+        main(video_path, output_video_path, track_data_path, centroid_data_path, shape_data_path)
