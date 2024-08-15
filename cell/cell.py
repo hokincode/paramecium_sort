@@ -2,17 +2,15 @@ import math
 import json
 
 class Frame:
-    def __init__(self, frame, ID, xmin, ymin, xmax, ymax, remove, x, y, velocity):
+    def __init__(self, frame, ID, xmin, ymin, xmax, ymax, x, y):
         self.frame = frame
         self.ID = ID
         self.xmin = xmin
         self.ymin = ymin
         self.xmax = xmax
         self.ymax = ymax
-        self.remove = remove
         self.x = x
         self.y = y
-        self.velocity = velocity
 
     def __repr__(self):
         return (f"Frame(frame={self.frame}, ID={self.ID}, xmin={self.xmin}, ymin={self.ymin}, "
@@ -27,10 +25,8 @@ class Frame:
             'ymin': self.ymin,
             'xmax': self.xmax,
             'ymax': self.ymax,
-            'remove': self.remove,
             'x': self.x,
             'y': self.y,
-            'velocity': self.velocity
         }
 
 class Cell:
@@ -86,10 +82,8 @@ class Cell:
                 'ymin': row['ymin'],
                 'xmax': row['xmax'],
                 'ymax': row['ymax'],
-                'remove': row['remove'],
                 'x': row['x'],
                 'y': row['y'],
-                'velocity': row['velocity']
             }
             distance = self.distance_to(box_info)
             if distance < min_distance:

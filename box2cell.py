@@ -11,7 +11,7 @@ import time
 import os
 import re
 import pandas as pd
-from cell import cell as Cell
+from cell.cell import Cell as Cell_Object
 
 def logger_setup():
     """ logger_setup
@@ -63,7 +63,8 @@ def sort(df, path):
             'x': row['xmin'],
             'y': row['ymin'],
         }
-        cell = Cell(box_info)
+        print(type(Cell_Object))
+        cell = Cell_Object(box_info)
         list_of_cells.append(cell)
 
     print('Cell list instantiated')
