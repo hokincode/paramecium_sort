@@ -278,5 +278,4 @@ if __name__ == "__main__":
         track_data_path = sys.argv[3]
         centroid_data_path = sys.argv[4]
         shape_data_path = sys.argv[5]
-        total_data_path = sys.argv[6]
         main(video_path, output_video_path, track_data_path, centroid_data_path, shape_data_path)
