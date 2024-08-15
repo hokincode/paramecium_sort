@@ -13,3 +13,7 @@ python box2cell.py --sort centroid_example.csv --sorted sorted_cell
 ```
 
 Analysis
+
+```sh
+jupyter notebook analysis.ipynb
+```
