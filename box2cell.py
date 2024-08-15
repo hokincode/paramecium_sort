@@ -62,7 +62,6 @@ def sort(df, path):
         print(type(Cell_Object))
         cell = Cell_Object(box_info)
         list_of_cells.append(cell)
-
     print('Cell list instantiated')
 
     # Iterate through each frame's data
