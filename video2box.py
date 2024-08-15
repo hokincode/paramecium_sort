@@ -264,11 +264,6 @@ def main(video_path, output_video_path, track_data_path, centroid_data_path, sha
     centroid_data.to_csv(centroid_data_path, mode='a', index=False, header=False)
     shape_data.to_csv(shape_data_path, mode='a', index=False, header=False)
 
-    # Concatenate the DataFrames vertically
-    combined_data = pd.concat([track_data, centroid_data, shape_data])
-    # Save the combined DataFrame to a single CSV file
-    combined_data.to_csv(total_data_path, index=False)
-
 if __name__ == "__main__":
     if len(sys.argv) != 7:
         print("Wrong Usage: System parameters must equal to 6")
