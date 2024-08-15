@@ -2,29 +2,20 @@ import math
 import json
 
 class Frame:
-    def __init__(self, frame, ID, xmin, ymin, xmax, ymax, x, y):
+    def __init__(self, frame, ID, x, y):
         self.frame = frame
         self.ID = ID
-        self.xmin = xmin
-        self.ymin = ymin
-        self.xmax = xmax
-        self.ymax = ymax
         self.x = x
         self.y = y
 
     def __repr__(self):
-        return (f"Frame(frame={self.frame}, ID={self.ID}, xmin={self.xmin}, ymin={self.ymin}, "
-                f"xmax={self.xmax}, ymax={self.ymax}, remove={self.remove}, x={self.x}, "
-                f"y={self.y}, velocity={self.velocity})")
+        return (f"Frame(frame={self.frame}, ID={self.ID}, x={self.x}, "
+                f"y={self.y}")
 
     def to_dict(self):
         return {
             'frame': self.frame,
             'ID': self.ID,
-            'xmin': self.xmin,
-            'ymin': self.ymin,
-            'xmax': self.xmax,
-            'ymax': self.ymax,
             'x': self.x,
             'y': self.y,
         }
@@ -78,10 +69,6 @@ class Cell:
             box_info = {
                 'frame': row['frame'],
                 'ID': row['ID'],
-                'xmin': row['xmin'],
-                'ymin': row['ymin'],
-                'xmax': row['xmax'],
-                'ymax': row['ymax'],
                 'x': row['x'],
                 'y': row['y'],
             }
