@@ -42,7 +42,7 @@ def logger_setup():
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--sort', type=str, default='track_example', help='directory of to be sorted', dest='sort')
-    parser.add_argument('--sorted', type=str, default='sorted_example', help='directory of to be sorted', dest='sort')
+    parser.add_argument('--sorted', type=str, default='sorted_example', help='directory of to be sorted', dest='sorted')
     return parser.parse_args()
 
 def sort(df, path):
