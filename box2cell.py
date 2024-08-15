@@ -42,6 +42,7 @@ def logger_setup():
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--sort', type=str, default='track_example', help='directory of to be sorted', dest='sort')
+    parser.add_argument('--sorted', type=str, default='sorted_example', help='directory of to be sorted', dest='sort')
     return parser.parse_args()
 
 def sort(df, path):
@@ -83,7 +84,7 @@ def sort(df, path):
 if __name__ == "__main__":
     args = get_args()
     print(os.getcwd())
-    out_path = args.sort
+    out_path = args.sorted
     input_path = args.sort
     experiment_behavior_csv = args.sort + '.csv'
     print(experiment_behavior_csv)
