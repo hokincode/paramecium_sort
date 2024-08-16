@@ -5,7 +5,6 @@ import numpy as np
 import pandas as pd
 import sys
 from tracking_kalman.detect_stardist import Detectors
-from stardist.models import StarDist2D
 from datetime import timedelta
 
 def main(video_path, output_video_path, centroid_data_path):
