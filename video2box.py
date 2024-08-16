@@ -5,8 +5,6 @@ import numpy as np
 import pandas as pd
 import sys
 from tracking_kalman.detect_stardist import Detectors
-from tracking_kalman.tracking import Tracker
-from deep_sort_realtime.deepsort_tracker import DeepSort
 import haiku as hk
 import jax
 import tree
@@ -89,25 +87,12 @@ def sample_random_points(frame_max_idx, height, width, num_points):
   points = np.concatenate((t, y, x), axis=-1).astype(np.int32)  # [num_points, 3]
   return points
 
-def main(video_path, output_video_path, track_data_path, centroid_data_path, shape_data_path):
-    #track_data = pd.DataFrame(columns=['Time', 'ID', 'X', 'Y'])
-
-    track_data = pd.DataFrame(columns=['frame', 'ID', 'xmin', 'ymin', 'xmax', 'ymax'])
-    track_data.to_csv(track_data_path, index=False)
+def main(video_path, output_video_path, centroid_data_path):
 
     centroid_data = pd.DataFrame(columns=['frame', 'ID', 'x', 'y'])
-    shape_data = pd.DataFrame(columns=['frame', 'ID', 'x', 'y'])
 
     cap = cv2.VideoCapture(video_path)
     detector = Detectors()
-    tracker = Tracker(10, 30, 8, 120)
-    tracker = DeepSort(max_age=50)
-
-    # Variables initialization
-    track_colors = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0),
-                    (0, 255, 255), (255, 0, 255), (255, 127, 255),
-                    (127, 0, 255), (127, 0, 127)]
-    pause = False
 
     # Get video properties
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -237,7 +222,6 @@ def main(video_path, output_video_path, track_data_path, centroid_data_path, sha
             if area < areaThresh:
               while len(mytracks) <= int(track_id):
                 mytracks.append([])  # Initialize new tracks as empty lists
-
               mytracks[int(track_id)].append((xmin, ymin))
               clr = int(track_id) % 9
               cv2.rectangle(orig_frame, (xmin, ymin), (xmax, ymax), track_colors[clr], 1)
@@ -246,8 +230,6 @@ def main(video_path, output_video_path, track_data_path, centroid_data_path, sha
                           cv2.FONT_HERSHEY_SIMPLEX, 0.45, (255,255,255), 1)
               track_data_tmp = pd.DataFrame({'frame': [frame_count], 'ID': [track_id], 'xmin': [xmin], 'ymin': [ymin], 'xmax': [xmax], 'ymax': [ymax]})
               track_data_tmp.to_csv(track_data_path, mode='a', index=False, header=False)
-
-
         frame_count += 1
 
         # Write the processed frame to the output video
