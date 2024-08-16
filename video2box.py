@@ -47,6 +47,7 @@ def main(video_path, output_video_path, centroid_data_path):
         ret, frame = cap.read()
         if not ret:
             break
+
         # Make copy of original frame
         orig_frame = copy.copy(frame)
         gray_frame = cv2.cvtColor(orig_frame, cv2.COLOR_BGR2GRAY)
