@@ -48,7 +48,7 @@ def get_args():
 def sort(df, path):
     # Group by the 'frame' column
     grouped = df.groupby('frame')
-    group_2 = grouped.get_group(2)
+    group_2 = grouped.get_group(0)
     list_of_cells = []
 
     for _, row in group_2.iterrows():
@@ -58,10 +58,11 @@ def sort(df, path):
             'x': row['x'],
             'y': row['y'],
         }
-        print(type(Cell_Object))
         cell = Cell_Object(box_info)
         list_of_cells.append(cell)
     print('Cell list instantiated')
+
+    print(list_of_cells)
 
     # Iterate through each frame's data
     for frame_id, group in grouped:
