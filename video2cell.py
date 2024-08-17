@@ -223,6 +223,10 @@ def main(video_path, output_video_path, centroid_data_path):
     print("Frames Per Seconds (fps):", fps)
     # Save track_data as CSV
     centroid_data.to_csv(centroid_data_path, mode='a', index=False, header=False)
+    path = 'sorted_cell'
+    for i in range(len(list_of_cells)):
+        cell = list_of_cells[i]
+        cell.save(os.path.join(path, f'cell_{i}.json'))
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
