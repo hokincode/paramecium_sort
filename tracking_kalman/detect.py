@@ -49,29 +49,7 @@ class Detectors(object):
         _, g_thresholded = cv2.threshold(g_thresholded, 10, 255, cv2.THRESH_BINARY)
 
         contours, _ = cv2.findContours(g_thresholded, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        # Perform Background Subtraction
-        #fgmask = self.fgbg.apply(blurred)
-
-        # Detect edges
-        #edges = cv2.Canny(fgmask, g_thresholdValue, 190, 3)
-
-
-        # Retain only edges within the threshold
-        #ret, thresh = cv2.threshold(edges, g_thresholdValue, 255, 0)
-
-        #cv2_imshow(g_thresholded)
-
-        # Find contours
-        #contours, hierarchy = cv2.findContours(thresh,
-         #                                         cv2.RETR_EXTERNAL,
-         #                                         cv2.CHAIN_APPROX_SIMPLE)
-
-
         centers = []  # vector of object centroids in a frame
-        # we only care about centroids with size of bug in this example
-        # recommended to be tunned based on expected object size for
-        # improved performance
-        blob_radius_thresh = 8
         contourColor = (64,163,241)  # Orange color (BGR format)
         centroidColor = (0, 0, 255)  # Red color (BGR format)
 
@@ -91,9 +69,5 @@ class Detectors(object):
                     centers.append(np.round(b))
             except ZeroDivisionError:
                 pass
-
-        # show contours of tracking objects
-        # cv2.imshow('Track Bugs', frame)
-        #print(len(centers))
 
         return centers
