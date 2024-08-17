@@ -116,6 +116,32 @@ class Cell:
             cell.add_frame_info(frame_info)
         return cell
 
+
+
+
+
+"""
+Video Processing Script
+
+This script processes a video to detect and track objects frame by frame, 
+and outputs both a processed video and a CSV file containing the centroid 
+data of the detected objects.
+
+Usage:
+    python your_script.py input_video.mp4 output_video.mp4 centroid_data.csv
+
+Arguments:
+    video_path: Path to the input video file.
+    output_video_path: Path to save the processed output video file.
+    centroid_data_path: Path to save the centroid data as a CSV file.
+
+Dependencies:
+    - OpenCV (cv2)
+    - Pandas
+    - StarDist2D model from stardist
+    - Custom Detectors class (assumed to be defined in 'detectors' module)
+"""
+
 def main(video_path, output_video_path, centroid_data_path):
 
     centroid_data = pd.DataFrame(columns=['frame', 'ID', 'x', 'y'])
