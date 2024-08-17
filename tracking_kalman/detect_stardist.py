@@ -83,8 +83,8 @@ class Detectors(object):
             cv2.circle(frame, centerA, 2, centroidColor, cv2.FILLED)
 
             # Draw the bounding box
-            cv2.drawContours(frame, [contour], 0, (0, 90, 170), 2)
-            cv2.drawContours(frame, [contour], 0, (45, 150, 230), 1)
+            # cv2.drawContours(frame, [contour], 0, (0, 90, 170), 2)
+            # cv2.drawContours(frame, [contour], 0, (45, 150, 230), 1)
 
             # Extract and add the contour coordinates to the DataFrame
             for point in contour:
@@ -101,7 +101,6 @@ class Detectors(object):
             # Append the centroid coordinates to 'finalout'
             finalout.append(np.array([[centroid_x], [centroid_y]]))
             results.append([[xmin, ymin,  int(w), int(h)], 1, class_id])
-
 
         centers = details['points']
         centers = centers[:, ::-1]
