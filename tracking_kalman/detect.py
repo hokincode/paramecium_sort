@@ -60,9 +60,7 @@ class Detectors(object):
                 (x, y), radius = cv2.minEnclosingCircle(cnt)
                 area = cv2.contourArea(cnt)
                 centeroid = (int(x), int(y))
-                radius = int(radius)
-                if g_minContourSize < area < g_maxContourSize: #(radius > blob_radius_thresh):
-                    #cv2.circle(frame, centeroid, radius, (0, 255, 0), 2)
+                if g_minContourSize < area < g_maxContourSize:
                     cv2.drawContours(frame, [cnt], -1, contourColor, 2)
                     cv2.circle(frame, centeroid, 3, centroidColor, cv2.FILLED)
                     b = np.array([[x], [y]])
