@@ -174,6 +174,7 @@ def main(video_path, output_video_path, centroid_data_path):
     print(first_object)
     print('Centers detected', centers, '\n')
     print(type(centers), '\n')
+    print(centers[1])
     centroid["frame"] = 0
     centroid_data = pd.concat([centroid_data, centroid], ignore_index=True)
     frame_count = 1
@@ -187,6 +188,8 @@ def main(video_path, output_video_path, centroid_data_path):
             'ID': row['ID'],
             'x': row['x'],
             'y': row['y'],
+            'center': centers[row['ID']],
+            'contour': contours.get_group(row['ID'])
         }
         cell = Cell(box_info)
         list_of_cells.append(cell)
