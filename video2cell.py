@@ -12,15 +12,17 @@ import math
 import json
 
 class Frame:
-    def __init__(self, frame, ID, x, y):
+    def __init__(self, frame, ID, x, y, center, contour):
         self.frame = frame
         self.ID = ID
         self.x = x
         self.y = y
+        self.center = center
+        self.contour = contour
 
     def __repr__(self):
         return (f"Frame(frame={self.frame}, ID={self.ID}, x={self.x}, "
-                f"y={self.y}")
+                f"y={self.y}, center={self.center}, contour_shape={self.contour.shape})")
 
     def to_dict(self):
         def convert(value):
@@ -33,6 +35,8 @@ class Frame:
             'ID': convert(self.ID),
             'x': convert(self.x),
             'y': convert(self.y),
+            'center': [convert(c) for c in self.center],  # Convert center list elements
+            'contour': self.contour.to_dict(orient='list')  # Convert DataFrame to dict
         }
 
 class Cell:
@@ -72,7 +76,7 @@ class Cell:
         x2, y2 = other['x'], other['y']
         return math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
 
-    def find_nearest_json(self, group, frame_index=-1):
+    def find_nearest(self, group, frame_index=-1):
         """
         Find the nearest cell in the next frame based on the specified frame index.
         Defaults to the latest frame if frame_index is not provided.
