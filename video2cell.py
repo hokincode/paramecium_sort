@@ -167,6 +167,7 @@ def main(video_path, output_video_path, centroid_data_path):
 
     # Initialize with centroids in the first frame
     print('Centroid data', centroid)
+    print('Centroid data type', type(centroid))
 
     # Infinite loop to process video frames
     while True:
@@ -183,6 +184,7 @@ def main(video_path, output_video_path, centroid_data_path):
         centroid, contours, centers = detector.Detect(orig_frame, model)
         contours["frame"] = frame_count
         centroid["frame"] = frame_count
+        centroid_data = pd.concat([centroid_data, centroid], ignore_index=True)
         print("Currently processing:", timedelta(seconds=(frame_count / 30.0)),   end="\r", flush=True)
         # Write the processed frame to the output video
         output_video.write(orig_frame)
