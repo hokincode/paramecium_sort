@@ -166,8 +166,18 @@ def main(video_path, output_video_path, centroid_data_path):
     frame_count = 1
 
     # Initialize with centroids in the first frame
-    print('Centroid data', centroid)
-    print('Centroid data type', type(centroid))
+    print('Centroids Detected in the First Frame', centroid)
+    list_of_cells = []
+    for _, row in centroid.iterrows():
+        box_info = {
+            'frame': row['frame'],
+            'ID': row['ID'],
+            'x': row['x'],
+            'y': row['y'],
+        }
+        cell = Cell(box_info)
+        list_of_cells.append(cell)
+    print('Cell List instantiated from First Frame Centroid')
 
     # Infinite loop to process video frames
     while True:
