@@ -194,9 +194,8 @@ def main(video_path, output_video_path, centroid_data_path):
     output_video.release()
 
     print("Frames Per Seconds (fps):", fps)
-
     # Save track_data as CSV
-    centroid_data.to_csv(centroid_data_path, mode='a', index=False, header=False)
+    # centroid_data.to_csv(centroid_data_path, mode='a', index=False, header=False)
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
