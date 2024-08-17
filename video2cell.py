@@ -72,14 +72,13 @@ class Cell:
         x2, y2 = other['x'], other['y']
         return math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
 
-    def find_nearest(self, group, frame_index=-1):
+    def find_nearest_json(self, group, frame_index=-1):
         """
         Find the nearest cell in the next frame based on the specified frame index.
         Defaults to the latest frame if frame_index is not provided.
         """
         nearest_box = None
         min_distance = float('inf')
-
         for _, row in group.iterrows():
             box_info = {
                 'frame': row['frame'],
@@ -91,7 +90,6 @@ class Cell:
             if distance < min_distance:
                 min_distance = distance
                 nearest_box = box_info
-
         return nearest_box
 
     def save(self, path):
@@ -102,7 +100,7 @@ class Cell:
             json.dump(self.to_dict(), file, indent=4)
 
     @classmethod
-    def read(cls, path):
+    def read_json(cls, path):
         """
         Read the Cell's data from a JSON file at the specified path.
         """
@@ -115,6 +113,7 @@ class Cell:
         for frame_info in frames[1:]:
             cell.add_frame_info(frame_info)
         return cell
+
 
 """
 Video Processing Script
@@ -166,6 +165,9 @@ def main(video_path, output_video_path, centroid_data_path):
     centroid_data = pd.concat([centroid_data, centroid], ignore_index=True)
     frame_count = 1
 
+    # Initialize with centroids in the first frame
+    print('Centroid data', centroid)
+
     # Infinite loop to process video frames
     while True:
         # Capture frame-by-frame
@@ -185,7 +187,6 @@ def main(video_path, output_video_path, centroid_data_path):
         # Write the processed frame to the output video
         output_video.write(orig_frame)
         frame_count = frame_count + 1
-        print('Centroid data', centroid)
 
     # Release the video capture and writer objects
     cap.release()
