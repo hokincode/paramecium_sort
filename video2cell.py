@@ -116,10 +116,6 @@ class Cell:
             cell.add_frame_info(frame_info)
         return cell
 
-
-
-
-
 """
 Video Processing Script
 
@@ -171,6 +167,7 @@ def main(video_path, output_video_path, centroid_data_path):
     centroid_data.to_csv(centroid_data_path, index=False)
     frame_count = 1
 
+
     # Infinite loop to process video frames
     while True:
         # Capture frame-by-frame
@@ -190,6 +187,8 @@ def main(video_path, output_video_path, centroid_data_path):
         print("Currently processing:", timedelta(seconds=(frame_count / 30.0)),   end="\r", flush=True)
         # Write the processed frame to the output video
         output_video.write(orig_frame)
+        print('Centroid data', centroid)
+
     # Release the video capture and writer objects
     cap.release()
     output_video.release()
