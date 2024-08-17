@@ -164,9 +164,7 @@ def main(video_path, output_video_path, centroid_data_path):
     contours["frame"] = 0
     centroid["frame"] = 0
     centroid_data = pd.concat([centroid_data, centroid], ignore_index=True)
-    centroid_data.to_csv(centroid_data_path, index=False)
     frame_count = 1
-
 
     # Infinite loop to process video frames
     while True:
@@ -195,7 +193,7 @@ def main(video_path, output_video_path, centroid_data_path):
 
     print("Frames Per Seconds (fps):", fps)
     # Save track_data as CSV
-    # centroid_data.to_csv(centroid_data_path, mode='a', index=False, header=False)
+    centroid_data.to_csv(centroid_data_path, mode='a', index=False, header=False)
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
