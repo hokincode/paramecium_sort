@@ -17,3 +17,9 @@ Analysis of individual cell data using Jupyter Notebook
 ```sh
 jupyter notebook analysis.ipynb
 ```
+
+New Command Line 
+
+```sh
+python video2cell.py './video/example.avi' 'out_example.mp4' 'example.csv' 
+```
