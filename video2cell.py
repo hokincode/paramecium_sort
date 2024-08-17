@@ -139,7 +139,6 @@ Dependencies:
     - OpenCV (cv2)
     - Pandas
     - StarDist2D model from stardist
-    - Custom Detectors class (assumed to be defined in 'detectors' module)
 """
 
 def main(video_path, output_video_path, centroid_data_path):
