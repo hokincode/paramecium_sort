@@ -164,17 +164,7 @@ def main(video_path, output_video_path, centroid_data_path):
     prev_frame = cv2.cvtColor(gray_frame, cv2.COLOR_GRAY2BGR)
     model = StarDist2D(None, name='grayscale_paramecium', basedir='models')
     centroid, contours, centers = detector.Detect(prev_frame, model)
-    print('Centroid detected', centroid, '\n')
-    print('Contours detected', contours, '\n')
-    print(type(contours))
-    print(contours.iloc[2])
     contours = contours.groupby('ID')
-    print('Contours detected', contours.count())
-    first_object = contours.get_group(0)
-    print(first_object)
-    print('Centers detected', centers, '\n')
-    print(type(centers), '\n')
-    print(centers[1])
     centroid["frame"] = 0
     centroid_data = pd.concat([centroid_data, centroid], ignore_index=True)
     frame_count = 1
@@ -211,6 +201,12 @@ def main(video_path, output_video_path, centroid_data_path):
         contours["frame"] = frame_count
         centroid["frame"] = frame_count
         centroid_data = pd.concat([centroid_data, centroid], ignore_index=True)
+
+
+
+
+
+
         print("Currently processing:", timedelta(seconds=(frame_count / 30.0)),   end="\r", flush=True)
         # Write the processed frame to the output video
         output_video.write(orig_frame)
