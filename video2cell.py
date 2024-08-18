@@ -122,25 +122,21 @@ class Cell:
 """
 Video Processing Script
 
-This script processes a video to detect and track objects frame by frame, 
-and outputs both a processed video and a CSV file containing the centroid 
-data of the detected objects.
+This script processes a video to detect and track cells frame by frame, 
+and outputs both a processed video and a folder containing the centroid 
+data of the detected cells.
 
 Usage:
-    python your_script.py input_video.mp4 output_video.mp4 centroid_data.csv
-
-Arguments:
-    video_path: Path to the input video file.
-    output_video_path: Path to save the processed output video file.
-    centroid_data_path: Path to save the centroid data as a CSV file.
-
-Dependencies:
-    - OpenCV (cv2)
-    - Pandas
-    - StarDist2D model from stardist
+    python your_script.py example_experiment.mp4 example_experiment
 """
 
-def main(video_path, output_video_path, centroid_data_path):
+def main(video_path, output_video_path, experiment_name):
+
+    # Define the path for the experiment by appending a forward slash to the experiment name.
+    # Create a directory with the path.
+    path = experiment_name + '/'
+    os.makedirs(path, exist_ok=True)
+    centroid_data_path = os.path.join(path, 'raw_centroid_data.csv')
 
     centroid_data = pd.DataFrame(columns=['frame', 'ID', 'x', 'y'])
     cap = cv2.VideoCapture(video_path)
@@ -204,9 +200,6 @@ def main(video_path, output_video_path, centroid_data_path):
 
 
 
-
-
-
         print("Currently processing:", timedelta(seconds=(frame_count / 30.0)),   end="\r", flush=True)
         # Write the processed frame to the output video
         output_video.write(orig_frame)
@@ -219,7 +212,6 @@ def main(video_path, output_video_path, centroid_data_path):
     print("Frames Per Seconds (fps):", fps)
     # Save track_data as CSV
     centroid_data.to_csv(centroid_data_path, mode='a', index=False, header=False)
-    path = 'sorted_cell'
     for i in range(len(list_of_cells)):
         cell = list_of_cells[i]
         cell.save(os.path.join(path, f'cell_{i}.json'))
@@ -236,5 +228,5 @@ if __name__ == "__main__":
     else:
         video_path = sys.argv[1]
         output_video_path = sys.argv[2]
-        centroid_data_path = sys.argv[3]
-        main(video_path, output_video_path, centroid_data_path)
+        experiment_name = sys.argv[3]
+        main(video_path, output_video_path, experiment_name)
