@@ -199,6 +199,12 @@ def main(video_path, output_video_path, experiment_name):
         centroid_data = pd.concat([centroid_data, centroid], ignore_index=True)
 
         print("Currently processing:", timedelta(seconds=(frame_count / 30.0)),   end="\r", flush=True)
+
+        ## iterate over cells for finding the nearest neighbour
+
+
+
+
         # Write the processed frame to the output video
         output_video.write(orig_frame)
         frame_count = frame_count + 1
