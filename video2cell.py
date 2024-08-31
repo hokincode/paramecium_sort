@@ -192,7 +192,9 @@ def main(video_path, output_video_path, experiment_name):
         gray_frame = cv2.cvtColor(orig_frame, cv2.COLOR_BGR2GRAY)
         # Convert the grayscale frame back to BGR
         orig_frame = cv2.cvtColor(gray_frame, cv2.COLOR_GRAY2BGR)
+
         # Detect and return centroids of the objects in the frame
+        # and add to group object
         centroid, contours, centers = detector.Detect(orig_frame, model)
         contours["frame"] = frame_count
         centroid["frame"] = frame_count
@@ -202,8 +204,11 @@ def main(video_path, output_video_path, experiment_name):
 
         ## iterate over cells for finding the nearest neighbour
 
-
-
+        for i in range(len(list_of_cells)):
+            cell = list_of_cells[i]
+            next_frame = cell.find_nearest(group)
+            cell.add_frame_info(next_frame)
+            list_of_cells[i] = cell
 
         # Write the processed frame to the output video
         output_video.write(orig_frame)
