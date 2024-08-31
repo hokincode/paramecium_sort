@@ -134,6 +134,7 @@ def main(video_path, output_video_path, experiment_name):
 
     # Define the path for the experiment by appending a forward slash to the experiment name.
     # Create a directory with the path.
+    group = pd.DataFrame(columns=['frame', 'ID', 'x', 'y', 'center', 'contour'])
     path = experiment_name + '/'
     os.makedirs(path, exist_ok=True)
     centroid_data_path = os.path.join(path, 'raw_centroid_data.csv')
@@ -197,6 +198,7 @@ def main(video_path, output_video_path, experiment_name):
         centroid, contours, centers = detector.Detect(orig_frame, model)
         contours["frame"] = frame_count
         centroid["frame"] = frame_count
+        contours = contours.groupby('ID')
 
         # and add to group object
         for _, row in centroid.iterrows():
@@ -208,7 +210,7 @@ def main(video_path, output_video_path, experiment_name):
                 'center': centers[row['ID']],
                 'contour': contours.get_group(row['ID'])
             }
-
+            group = group.append(box_info, ignore_index=True)
 
         # Having a reference of the total data
         centroid_data = pd.concat([centroid_data, centroid], ignore_index=True)
