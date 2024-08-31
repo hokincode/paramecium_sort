@@ -13,7 +13,7 @@ class Frame:
 
     def __repr__(self):
         return (f"Frame(frame={self.frame}, ID={self.ID}, x={self.x}, "
-                f"y={self.y}")
+                f"y={self.y}, center={self.center}, contour={self.contour})")
 
     def to_dict(self):
         def convert(value):
@@ -26,6 +26,8 @@ class Frame:
             'ID': convert(self.ID),
             'x': convert(self.x),
             'y': convert(self.y),
+            'center': convert(self.center),
+            'contour': convert(self.contour),
         }
 
 class Cell:
