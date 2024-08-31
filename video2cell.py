@@ -83,17 +83,21 @@ class Cell:
         """
         nearest_box = None
         min_distance = float('inf')
-        for _, row in group.iterrows():
+
+        for _, cache in group.iterrows():
             box_info = {
-                'frame': row['frame'],
-                'ID': row['ID'],
-                'x': row['x'],
-                'y': row['y'],
+                'frame': cache['frame'],
+                'ID': cache['ID'],
+                'x': cache['x'],
+                'y': cache['y'],
+                'center': cache['center'],
+                'contour':cache['contour']
             }
             distance = self.distance_to(box_info)
             if distance < min_distance:
                 min_distance = distance
                 nearest_box = box_info
+
         return nearest_box
 
     def save(self, path):

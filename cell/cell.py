@@ -81,8 +81,8 @@ class Cell:
                 'ID': cache['ID'],
                 'x': cache['x'],
                 'y': cache['y'],
-                'center': cache['ID'],
-                'contour':cache['ID']
+                'center': cache['center'],
+                'contour':cache['contour']
             }
             distance = self.distance_to(box_info)
             if distance < min_distance:
