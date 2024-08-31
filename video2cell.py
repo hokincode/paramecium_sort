@@ -173,14 +173,17 @@ def main(video_path, output_video_path, experiment_name):
     # Initialize with centroids in the first frame
     print('Centroids Detected in the First Frame', centroid)
     list_of_cells = []
-    for _, row in centroid.iterrows():
+    for center_info in centers:
+        coords = center_info[0]  # [x, y, width, height]
+        frame = center_info[1]  # frame value
+        ID = center_info[2]  # ID value
         box_info = {
-            'frame': row['frame'],
-            'ID': row['ID'],
-            'x': row['x'],
-            'y': row['y'],
-            'center': centers[row['ID']],
-            'contour': contours.get_group(row['ID'])
+            'frame': frame,
+            'ID': ID,
+            'x': coords[0],  # x coordinate
+            'y': coords[1],  # y coordinate
+            'center': center_info,  # Assuming you want to keep the full center info
+            'contour': contours.get_group(ID)  # Assuming contours is a DataFrameGroupBy object
         }
         cell = Cell(box_info)
         list_of_cells.append(cell)
@@ -205,14 +208,17 @@ def main(video_path, output_video_path, experiment_name):
         contours = contours.groupby('ID')
 
         # and add to group object
-        for _, row in centroid.iterrows():
+        for center_info in centers:
+            coords = center_info[0]  # [x, y, width, height]
+            frame = center_info[1]  # frame value
+            ID = center_info[2]  # ID value
             box_info = {
-                'frame': row['frame'],
-                'ID': row['ID'],
-                'x': row['x'],
-                'y': row['y'],
-                'center': centers[row['ID']],
-                'contour': contours.get_group(row['ID'])
+                'frame': frame,
+                'ID': ID,
+                'x': coords[0],  # x coordinate
+                'y': coords[1],  # y coordinate
+                'center': center_info,  # Assuming you want to keep the full center info
+                'contour': contours.get_group(ID)  # Assuming contours is a DataFrameGroupBy object
             }
             group = pd.concat([group, pd.DataFrame([box_info])], ignore_index=True)
 
@@ -221,12 +227,12 @@ def main(video_path, output_video_path, experiment_name):
         print("Currently processing:", timedelta(seconds=(frame_count / 30.0)),   end="\r", flush=True)
 
         ## iterate over cells for finding the nearest neighbour
-
         for i in range(len(list_of_cells)):
             cell = list_of_cells[i]
             next_frame = cell.find_nearest(group)
             cell.add_frame_info(next_frame)
             list_of_cells[i] = cell
+            cv2.putText(orig_frame, str(i), (next_frame['x'], next_frame['y']), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 255, 255), 2)
 
         # Write the processed frame to the output video
         output_video.write(orig_frame)
