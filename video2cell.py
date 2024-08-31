@@ -210,7 +210,7 @@ def main(video_path, output_video_path, experiment_name):
                 'center': centers[row['ID']],
                 'contour': contours.get_group(row['ID'])
             }
-            group = group.append(box_info, ignore_index=True)
+            group = pd.concat([group, pd.DataFrame([box_info])], ignore_index=True)
 
         # Having a reference of the total data
         centroid_data = pd.concat([centroid_data, centroid], ignore_index=True)

@@ -3,11 +3,13 @@ import json
 import numpy as np
 
 class Frame:
-    def __init__(self, frame, ID, x, y):
+    def __init__(self, frame, ID, x, y, center, contour):
         self.frame = frame
         self.ID = ID
         self.x = x
         self.y = y
+        self.center = center
+        self.contour = contour
 
     def __repr__(self):
         return (f"Frame(frame={self.frame}, ID={self.ID}, x={self.x}, "
