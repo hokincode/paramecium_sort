@@ -194,10 +194,22 @@ def main(video_path, output_video_path, experiment_name):
         orig_frame = cv2.cvtColor(gray_frame, cv2.COLOR_GRAY2BGR)
 
         # Detect and return centroids of the objects in the frame
-        # and add to group object
         centroid, contours, centers = detector.Detect(orig_frame, model)
         contours["frame"] = frame_count
         centroid["frame"] = frame_count
+
+        # and add to group object
+        for _, row in centroid.iterrows():
+            box_info = {
+                'frame': row['frame'],
+                'ID': row['ID'],
+                'x': row['x'],
+                'y': row['y'],
+                'center': centers[row['ID']],
+                'contour': contours.get_group(row['ID'])
+            }
+
+
         centroid_data = pd.concat([centroid_data, centroid], ignore_index=True)
 
         print("Currently processing:", timedelta(seconds=(frame_count / 30.0)),   end="\r", flush=True)
