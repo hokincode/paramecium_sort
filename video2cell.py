@@ -191,6 +191,7 @@ def main(video_path, output_video_path, experiment_name):
 
     # Infinite loop to process video frames
     while True:
+        group = pd.DataFrame(columns=['frame', 'ID', 'x', 'y', 'center', 'contour'])
         # Capture frame-by-frame
         ret, frame = cap.read()
         if not ret:
@@ -232,7 +233,7 @@ def main(video_path, output_video_path, experiment_name):
             next_frame = cell.find_nearest(group)
             cell.add_frame_info(next_frame)
             list_of_cells[i] = cell
-            cv2.putText(orig_frame, str(i), (next_frame['x'], next_frame['y']), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 255, 255), 2)
+            cv2.putText(orig_frame, str(i), (next_frame['x'], next_frame['y']), cv2.FONT_HERSHEY_SIMPLEX, .5, (255, 255, 255), 2)
 
         # Write the processed frame to the output video
         output_video.write(orig_frame)
