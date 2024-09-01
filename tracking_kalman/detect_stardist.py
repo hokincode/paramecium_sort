@@ -52,8 +52,8 @@ class Detectors(object):
         centroidColor2 = (255, 0, 0)  # Red color (BGR format)
         boundingBoxColor = (0, 255, 0)
 
+        # frame = cv2.cvtColor(frame, cv2.COLOR_GRAY2BGR)
         img = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) #change to gray scale
-
 
         n_channel = 1 if img.ndim == 2 else img.shape[-1]
         axis_norm = (0,1)   # normalize channels independently

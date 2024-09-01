@@ -134,11 +134,13 @@ Usage:
     python your_script.py example_experiment.mp4 example_experiment
 """
 
-def main(video_path, output_video_path, experiment_name):
+def main(video_path, output_video_path, experiment_name):\
+
+    # create a background subtractor
+    # background_subtractor = cv2.createBackgroundSubtractorMOG2(history=500, varThreshold=16, detectShadows=True)
 
     # Define the path for the experiment by appending a forward slash to the experiment name.
     # Create a directory with the path.
-    group = pd.DataFrame(columns=['frame', 'ID', 'x', 'y', 'center', 'contour'])
     path = experiment_name + '/'
     os.makedirs(path, exist_ok=True)
     centroid_data_path = os.path.join(path, 'raw_centroid_data.csv')
@@ -163,6 +165,7 @@ def main(video_path, output_video_path, experiment_name):
 
     # Convert the grayscale frame back to BGR
     prev_frame = cv2.cvtColor(gray_frame, cv2.COLOR_GRAY2BGR)
+    # prev_frame = background_subtractor.apply(prev_frame)
     model = StarDist2D(None, name='grayscale_paramecium', basedir='models')
     centroid, contours, centers = detector.Detect(prev_frame, model)
     contours = contours.groupby('ID')
@@ -201,7 +204,7 @@ def main(video_path, output_video_path, experiment_name):
         gray_frame = cv2.cvtColor(orig_frame, cv2.COLOR_BGR2GRAY)
         # Convert the grayscale frame back to BGR
         orig_frame = cv2.cvtColor(gray_frame, cv2.COLOR_GRAY2BGR)
-
+        # orig_frame = background_subtractor.apply(orig_frame)
         # Detect and return centroids of the objects in the frame
         centroid, contours, centers = detector.Detect(orig_frame, model)
         contours["frame"] = frame_count
@@ -250,6 +253,32 @@ def main(video_path, output_video_path, experiment_name):
         cell = list_of_cells[i]
         cell.save(os.path.join(path, f'cell_{i}.json'))
 
+def remove_edge(video_path, area_threshold=1000):
+
+    cap = cv2.VideoCapture(video_path)
+
+    # Read the first frame
+    ret, image = cap.read()
+    # Apply Canny edge detection
+    edges = cv2.Canny(image, 100, 200)
+    # Find contours in the edges image
+    contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+    print('Contours found:', len(contours))
+    # Iterate over contours to remove those that meet the criteria
+    for i, contour in enumerate(contours):
+        if area_threshold is not None:
+            area = cv2.contourArea(contour)
+            if area < area_threshold:
+                # Draw over the contour to remove it (fill with black)
+                cv2.drawContours(image, [contour], -1, (0, 0, 255), thickness=3)
+
+    output_path = 'output_image.png'  # Ensure the path ends with a valid image extension
+    # Save the modified image
+    cv2.imwrite(output_path, image)
+    return image
+
+
 if __name__ == "__main__":
     if len(sys.argv) != 4:
         print("Wrong Usage: System parameters must equal to 3")
@@ -263,4 +292,5 @@ if __name__ == "__main__":
         video_path = sys.argv[1]
         output_video_path = sys.argv[2]
         experiment_name = sys.argv[3]
-        main(video_path, output_video_path, experiment_name)
+        remove_edge(video_path)
+        # main(video_path, output_video_path, experiment_name)
